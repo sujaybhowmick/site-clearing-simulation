@@ -13,8 +13,8 @@ public class SiteMap {
 
     public void printMap() {
         for (Cell[] cells : grid) {
-            for (int j = 0; j < cells.length; j++) {
-                System.out.print(cells[j]);
+            for (Cell cell : cells) {
+                System.out.print(cell + " ");
             }
             System.out.println();
         }

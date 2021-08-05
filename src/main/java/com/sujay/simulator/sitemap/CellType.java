@@ -1,7 +1,7 @@
 package com.sujay.simulator.sitemap;
 
 public enum CellType {
-    ROCK('r'), CLEAR('o'), TREE('t');
+    ROCK('r'), CLEAR('o'), REMOVEABLETREE('t'), PRESERVEDTREE('T');
 
     private final char type;
     CellType(char type) {

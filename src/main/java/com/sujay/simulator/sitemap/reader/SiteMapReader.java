@@ -42,17 +42,24 @@ public class SiteMapReader implements MapReader<SiteMap> {
             for (int col = 0; col < cols; col++) {
                 switch (lines[row].charAt(col)) {
                     case 'r':
-                        siteMap.addCell(new Cell(CellType.ROCK, this.createCoordinate(row, col)));
+                        siteMap.addCell(this.createCell(CellType.ROCK, row, col));
                         break;
                     case 't':
-                        siteMap.addCell(new Cell(CellType.TREE, this.createCoordinate(row, col)));
+                        siteMap.addCell(this.createCell(CellType.REMOVEABLETREE, row, col));
+                        break;
+                    case 'T':
+                        siteMap.addCell(this.createCell(CellType.PRESERVEDTREE, row, col));
                         break;
                     default:
-                        siteMap.addCell(new Cell(CellType.CLEAR, this.createCoordinate(row, col)));
+                        siteMap.addCell(this.createCell(CellType.CLEAR, row, col));
                 }
             }
         }
         return siteMap;
+    }
+
+    private Cell createCell(CellType cellType, int row, int col) {
+        return new Cell(cellType, this.createCoordinate(row, col));
     }
 
     private Coordinate createCoordinate(int x, int y) {

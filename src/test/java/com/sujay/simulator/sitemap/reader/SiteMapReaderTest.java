@@ -25,7 +25,7 @@ class SiteMapReaderTest {
 
     @Test
     void readMap() {
-        final String input = "oooo\noror\ntoot";
+        final String input = "oooo\noror\ntooT";
         final MapReader<SiteMap> reader = builder.reader(new StringReader(input)).build();
         SiteMap siteMap = reader.readMap();
         Coordinate coordinate11 = new Coordinate(1, 1);
@@ -37,13 +37,13 @@ class SiteMapReaderTest {
         Coordinate coordinate23 = new Coordinate(2, 3);
         Cell cell24 = siteMap.getCellAt(coordinate23);
         assertThat(cell24).isNotNull();
-        assertThat(cell24.getCellType()).isEqualTo(CellType.TREE);
+        assertThat(cell24.getCellType()).isEqualTo(CellType.PRESERVEDTREE);
         assertThat(cell24.getCoordinate()).isEqualTo(coordinate23);
     }
 
     @Test
     void readMapOutOfBounds() {
-        final String input = "oooo\noror\ntoot";
+        final String input = "oooo\noror\ntooT";
         final MapReader<SiteMap> reader = builder.reader(new StringReader(input)).build();
         SiteMap siteMap = reader.readMap();
         Coordinate coordinate14 = new Coordinate(1, 4);
@@ -55,5 +55,13 @@ class SiteMapReaderTest {
         }catch (Exception iae) {
             assertThat(true).isTrue();
         }
+    }
+
+    @Test
+    void printSiteMap() {
+        final String input = "oooo\noror\ntooT";
+        final MapReader<SiteMap> reader = builder.reader(new StringReader(input)).build();
+        SiteMap siteMap = reader.readMap();
+        siteMap.printMap();
     }
 }
