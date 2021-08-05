@@ -13,6 +13,7 @@ import java.io.StringReader;
 
 class SiteMapReaderTest {
     SiteMapReader.Builder builder;
+
     @BeforeEach
     void setUp() {
         this.builder = new SiteMapReader.Builder();
@@ -41,7 +42,7 @@ class SiteMapReaderTest {
     }
 
     @Test
-    void readMapOutofBounds() {
+    void readMapOutOfBounds() {
         final String input = "oooo\noror\ntoot";
         final MapReader<SiteMap> reader = builder.reader(new StringReader(input)).build();
         SiteMap siteMap = reader.readMap();
@@ -54,6 +55,5 @@ class SiteMapReaderTest {
         }catch (Exception iae) {
             assertThat(true).isTrue();
         }
-
     }
 }
