@@ -51,9 +51,9 @@ public class Simulator implements Runnable {
     }
 
     private void printSimulationFinishedMessage() {
-        List<String> commandHistory = this.commandHistory.stream()
-                .map(Command::toString).collect(Collectors.toList());
+        String commandHistory = this.commandHistory.stream()
+                .map(Command::toString).collect(Collectors.joining(", "));
         System.out.println(commandHistory);
     }
-
 }
+

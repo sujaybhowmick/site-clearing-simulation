@@ -6,7 +6,7 @@ import com.sujay.simulator.sitemap.SiteMap;
 import com.sujay.simulator.sitemap.reader.MapReader;
 import com.sujay.simulator.sitemap.reader.SiteMapReader;
 
-import java.io.StringReader;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -17,9 +17,21 @@ public class Main {
     private static final String HELP_PROMPT = "(l)eft, (r)ight, (a)dvance <n>, (q)uit: ";
 
     public static void main(String[] args) {
-        final String input = "oooo\noror\ntooT";
+        if(args.length < 2 && !args[0].equals("--file")) {
+            printUsage();
+        }
+        final String fileName = args[1];
+        FileReader fileReader = null;
+        try {
+            fileReader = readFile(fileName);
+        } catch (FileNotFoundException e) {
+            printFileReadingErrorMessage(String.format("Cannot read file %s", fileName));
+        }
+        assert fileReader !=  null;
+
         SiteMapReader.Builder builder = new SiteMapReader.Builder();
-        final MapReader<SiteMap> reader = builder.reader(new StringReader(input)).build();
+
+        final MapReader<SiteMap> reader = builder.reader(fileReader).build();
         final SiteMap siteMap = reader.readMap();
 
         final BlockingQueue<SimulationEvent> eventQueue = new LinkedBlockingQueue<>();
@@ -34,6 +46,28 @@ public class Main {
         Thread simulatorThread = new Thread(simulator);
         simulatorThread.start();
         bullDozerThread.start();
+    }
+
+    private static FileReader readFile(String fileName) throws FileNotFoundException {
+        checkFile(fileName);
+        return new FileReader(fileName);
+    }
+
+    private static void checkFile(String fileName) {
+        final File file = new File(fileName);
+        if (!file.exists() && !file.isFile()) {
+            printFileReadingErrorMessage(String.format("File %s not found", fileName));
+        }
+    }
+
+    public static void printFileReadingErrorMessage(String message) {
+        System.out.println(message);
+        System.exit(-1);
+    }
+
+    private static void printUsage() {
+        System.out.println("java <program> --file <filename>");
+        System.exit(-1);
     }
 
     private static Queue<Command> getCommands(BullDozer bullDozer) {
