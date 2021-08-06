@@ -66,7 +66,7 @@ public class SiteMapReader implements MapReader<SiteMap> {
         return new Coordinate(x, y);
     }
 
-    static class Builder {
+    public static class Builder {
         private Reader reader;
 
         public Builder() {

@@ -50,3 +50,4 @@ public class TurnLeftCommand extends AbstractCommand {
         return commandType.toString();
     }
 }
+

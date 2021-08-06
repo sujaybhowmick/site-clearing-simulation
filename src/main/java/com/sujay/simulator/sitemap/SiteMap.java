@@ -27,7 +27,7 @@ public class SiteMap {
 
     private void ensureBounds(Coordinate coordinate) {
         final String message = String.format("Coordinates %s are out of bounds", coordinate);
-        if (!(coordinate.getX() < this.grid.length)) throw new IllegalArgumentException(message);
-        if(!(coordinate.getY() < this.grid[0].length)) throw new IllegalArgumentException(message);
+        if(coordinate.getX() < 0 || coordinate.getX() >= this.grid.length) throw new IllegalArgumentException(message);
+        if((coordinate.getY() < 0 || coordinate.getY() >= this.grid[0].length)) throw new IllegalArgumentException(message);
     }
 }

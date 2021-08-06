@@ -7,5 +7,5 @@ import java.nio.CharBuffer;
 
 public interface MapReader<T> {
     T readMap();
-
 }
+

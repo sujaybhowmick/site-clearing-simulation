@@ -20,6 +20,7 @@ public class Cell {
         return coordinate;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -35,6 +36,11 @@ public class Cell {
 
     @Override
     public String toString() {
-        return cellType.toString();
+        return "{" +
+                "Cell Type:" + cellType +
+                ", Coordinates (x, y):(" +
+                coordinate.getX() + ", " +
+                coordinate.getY() + ")}";
     }
 }
+

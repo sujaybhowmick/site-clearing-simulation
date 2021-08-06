@@ -1,7 +1,9 @@
 package com.sujay.simulator.command;
 
-@FunctionalInterface
 public interface Command {
-
     void execute();
+    CommandType getCommandType();
+    CommandContext getContext();
+    int getArg();
+
 }
