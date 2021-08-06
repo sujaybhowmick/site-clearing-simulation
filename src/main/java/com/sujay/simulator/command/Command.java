@@ -5,5 +5,4 @@ public interface Command {
     CommandType getCommandType();
     CommandContext getContext();
     int getArg();
-
 }
