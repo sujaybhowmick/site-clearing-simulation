@@ -33,5 +33,5 @@ public abstract class AbstractCommand implements Command {
     public int getArg() {
         return this.arg;
     }
-
 }
+
