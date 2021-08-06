@@ -7,7 +7,7 @@ public enum CommandType {
     QUIT('q', "quit");
 
     private final char commandType;
-    private String description;
+    private final String description;
 
     CommandType(char commandType, String description) {
         this.commandType = commandType;

@@ -15,7 +15,7 @@ public class TurnRightCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        BullDozer bullDozer  = context.getBullDozer();
+        BullDozer bullDozer = context.getBullDozer();
         Cell cell = getCurrentPosition();
         Coordinate coordinate = cell.getCoordinate();
         bullDozer.updateCurrentPosition(new Cell(cell.getCellType(),
@@ -31,7 +31,7 @@ public class TurnRightCommand extends AbstractCommand {
 
     private Orientation getNewOrientation() {
         Orientation currentOrientation = getOrientation();
-        switch (currentOrientation){
+        switch (currentOrientation) {
             case EAST:
                 return Orientation.SOUTH;
             case WEST:

@@ -31,11 +31,11 @@ public class TurnLeftCommand extends AbstractCommand {
 
     private Orientation getNewOrientation() {
         Orientation orientation = getOrientation();
-        switch (orientation){
+        switch (orientation) {
             case EAST:
                 return Orientation.NORTH;
             case WEST:
-                return  Orientation.SOUTH;
+                return Orientation.SOUTH;
             case NORTH:
                 return Orientation.WEST;
             case SOUTH:

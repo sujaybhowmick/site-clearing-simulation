@@ -2,7 +2,10 @@ package com.sujay.simulator.command;
 
 import com.sujay.simulator.BullDozer;
 import com.sujay.simulator.event.SimulationEvent;
-import com.sujay.simulator.sitemap.*;
+import com.sujay.simulator.sitemap.Cell;
+import com.sujay.simulator.sitemap.Coordinate;
+import com.sujay.simulator.sitemap.Orientation;
+import com.sujay.simulator.sitemap.SiteMap;
 
 public class AdvanceCommand extends AbstractCommand {
     public final CommandType commandType = CommandType.ADVANCE;
@@ -20,7 +23,7 @@ public class AdvanceCommand extends AbstractCommand {
             bullDozer.addVisitedCell(newCell);
             bullDozer.updateCurrentPosition(newCell);
             bullDozer.addEvent(new SimulationEvent(this));
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Illegal advance command, ending simulation");
             bullDozer.addEvent(new SimulationEvent(new QuitCommand(context)));
         }

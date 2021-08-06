@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class Simulator implements Runnable {
     private final BlockingQueue<SimulationEvent> eventQueue;
     private volatile boolean finished = false;
-    private List<Command> commandHistory = new ArrayList<>();
+    private final List<Command> commandHistory = new ArrayList<>();
 
 
     public Simulator(BlockingQueue<SimulationEvent> eventQueue) {
@@ -22,7 +22,7 @@ public class Simulator implements Runnable {
 
     @Override
     public void run() {
-        while(!finished) {
+        while (!finished) {
             try {
                 SimulationEvent event = this.eventQueue.take();
                 Command command = event.getCommand();

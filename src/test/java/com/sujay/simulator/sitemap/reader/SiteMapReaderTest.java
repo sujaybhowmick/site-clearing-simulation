@@ -7,9 +7,11 @@ import com.sujay.simulator.sitemap.SiteMap;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.*;
 
 import java.io.StringReader;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 class SiteMapReaderTest {
     SiteMapReader.Builder builder;
@@ -52,7 +54,7 @@ class SiteMapReaderTest {
             assertThat(cell).isNotNull();
             fail(String.format("Test failed as the bounds provided a cell value which is within bounds %s",
                     coordinate14));
-        }catch (Exception iae) {
+        } catch (Exception iae) {
             assertThat(true).isTrue();
         }
     }

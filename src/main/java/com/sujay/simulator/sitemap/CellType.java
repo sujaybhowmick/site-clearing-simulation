@@ -4,6 +4,7 @@ public enum CellType {
     ROCK('r'), CLEAR('o'), REMOVEABLETREE('t'), PRESERVEDTREE('T'), START('s');
 
     private final char type;
+
     CellType(char type) {
         this.type = type;
     }

@@ -15,6 +15,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class Main {
     private static final String HELP_PROMPT = "(l)eft, (r)ight, (a)dvance <n>, (q)uit: ";
+
     public static void main(String[] args) {
         final String input = "oooo\noror\ntooT";
         SiteMapReader.Builder builder = new SiteMapReader.Builder();
@@ -39,7 +40,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
         final Expression expression = new CommandExpression();
         final Queue<Command> commandQueue = new LinkedList<>();
-        while(true) {
+        while (true) {
             printHelp();
             Command command = expression.interpret(new CommandContext(bullDozer, input.nextLine()));
             commandQueue.add(command);

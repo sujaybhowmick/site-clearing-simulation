@@ -4,7 +4,9 @@ import com.sujay.simulator.command.Command;
 import com.sujay.simulator.event.SimulationEvent;
 import com.sujay.simulator.sitemap.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 
 public class BullDozer implements Runnable {
@@ -66,8 +68,8 @@ public class BullDozer implements Runnable {
 
     @Override
     public void run() {
-        if(this.commandQueue != null) {
-            while(!this.commandQueue.isEmpty()) {
+        if (this.commandQueue != null) {
+            while (!this.commandQueue.isEmpty()) {
                 execute(this.commandQueue.poll());
             }
         }
