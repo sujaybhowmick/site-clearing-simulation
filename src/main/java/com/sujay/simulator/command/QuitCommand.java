@@ -1,8 +1,5 @@
 package com.sujay.simulator.command;
 
-import com.sujay.simulator.BullDozer;
-import com.sujay.simulator.event.SimulationEvent;
-
 public class QuitCommand extends AbstractCommand {
     public final CommandType commandType = CommandType.QUIT;
 
