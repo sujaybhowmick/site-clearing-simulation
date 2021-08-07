@@ -15,34 +15,12 @@ public class TurnLeftCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        BullDozer bullDozer = context.getBullDozer();
-        Cell cell = getCurrentPosition();
-        Coordinate coordinate = cell.getCoordinate();
-        bullDozer.updateCurrentPosition(new Cell(cell.getCellType(),
-                new Coordinate(coordinate.getX(), coordinate.getY())));
-        bullDozer.updateOrientation(getNewOrientation());
-        bullDozer.addEvent(new SimulationEvent(this));
+        context.getBullDozer().turnLeft(this);
     }
 
     @Override
     public CommandType getCommandType() {
         return commandType;
-    }
-
-    private Orientation getNewOrientation() {
-        Orientation orientation = getOrientation();
-        switch (orientation) {
-            case EAST:
-                return Orientation.NORTH;
-            case WEST:
-                return Orientation.SOUTH;
-            case NORTH:
-                return Orientation.WEST;
-            case SOUTH:
-                return Orientation.EAST;
-            default:
-                throw new IllegalArgumentException(String.format("Wrong orientation %s provided in the command", orientation));
-        }
     }
 
     @Override
