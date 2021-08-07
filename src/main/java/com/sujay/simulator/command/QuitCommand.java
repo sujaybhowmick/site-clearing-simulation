@@ -12,8 +12,7 @@ public class QuitCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        BullDozer bullDozer = context.getBullDozer();
-        bullDozer.addEvent(new SimulationEvent(this));
+        context.getBullDozer().quit(this);
     }
 
     @Override

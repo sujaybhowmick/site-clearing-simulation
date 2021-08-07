@@ -66,7 +66,7 @@ public class BullDozer implements Runnable {
         return visitedCells;
     }
 
-    public void moveBullDozer(Command command) {
+    public synchronized void moveBullDozer(Command command) {
         try {
             commandHistory.add(command);
             Orientation orientation = getOrientation();
@@ -91,7 +91,7 @@ public class BullDozer implements Runnable {
         }
     }
 
-    public void turnLeft(Command command) {
+    public synchronized void turnLeft(Command command) {
         try {
             this.commandHistory.add(command);
             Orientation orientation = getOrientation();
@@ -118,7 +118,7 @@ public class BullDozer implements Runnable {
 
     }
 
-    public void turnRight(Command command) {
+    public synchronized void turnRight(Command command) {
         try {
             this.commandHistory.add(command);
             Orientation currentOrientation = getOrientation();
@@ -142,6 +142,10 @@ public class BullDozer implements Runnable {
         } catch (IllegalArgumentException e) {
             raiseQuitCommand(command);
         }
+    }
+
+    public synchronized void quit(Command command) {
+        raiseQuitCommand(command);
     }
 
     private void advanceEast(Command command) {
