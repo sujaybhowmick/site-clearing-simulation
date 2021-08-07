@@ -9,7 +9,6 @@ import java.util.*;
 import java.util.concurrent.BlockingQueue;
 
 public class BullDozer implements Runnable {
-    private volatile boolean finished = false;
     private final SiteMap siteMap;
     private final BlockingQueue<SimulationEvent> eventQueue;
     private final List<Command> commandHistory = new ArrayList<>();
@@ -178,7 +177,12 @@ public class BullDozer implements Runnable {
             Cell newCell = siteMap.getCellAt(newCoordinate);
             this.visitedCells.add(newCell);
             this.updateCurrentPosition(newCell);
-            quitIfRestrictedMove(command, newCell);
+            if (chekIfRestrictedMove(newCell)){
+                raiseQuitCommand(command);
+                break;
+            } else {
+                raiseCommandEvent(command);
+            }
         }
     }
 
@@ -194,17 +198,20 @@ public class BullDozer implements Runnable {
             Cell newCell = siteMap.getCellAt(newCoordinate);
             this.visitedCells.add(newCell);
             this.updateCurrentPosition(newCell);
-            quitIfRestrictedMove(command, newCell);
+
+            if (chekIfRestrictedMove(newCell)){
+                raiseQuitCommand(command);
+                break;
+            } else {
+                raiseCommandEvent(command);
+            }
         }
     }
 
-    private void quitIfRestrictedMove(Command command, Cell newCell) {
-        if (newCell.getCellType() == CellType.PRESERVEDTREE) {
-            this.finished = true;
-            raiseQuitCommand(command);
-        } else {
-            raiseCommandEvent(command);
-        }
+
+
+    private boolean chekIfRestrictedMove(Cell newCell) {
+        return newCell.getCellType() == CellType.PRESERVEDTREE;
     }
 
     private void raiseQuitCommand(Command command) {
@@ -221,9 +228,8 @@ public class BullDozer implements Runnable {
 
     @Override
     public void run() {
-        while (!this.finished && !this.commandQueue.isEmpty()) {
+        while (!this.commandQueue.isEmpty()) {
             execute(Objects.requireNonNull(this.commandQueue.poll()));
         }
-        this.commandQueue.clear();
     }
 }
