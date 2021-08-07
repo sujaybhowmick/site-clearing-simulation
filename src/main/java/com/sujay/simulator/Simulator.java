@@ -5,7 +5,6 @@ import com.sujay.simulator.command.CommandType;
 import com.sujay.simulator.event.SimulationEvent;
 import com.sujay.simulator.sitemap.Cell;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.stream.Collectors;
@@ -13,28 +12,43 @@ import java.util.stream.Collectors;
 public class Simulator implements Runnable {
     private final BlockingQueue<SimulationEvent> eventQueue;
     private volatile boolean finished = false;
-    private final List<Command> commandHistory = new ArrayList<>();
+    private final boolean extraInfo;
 
+
+    public Simulator(BlockingQueue<SimulationEvent> eventQueue, boolean extraInfo) {
+        this.eventQueue = eventQueue;
+        this.extraInfo = extraInfo;
+    }
 
     public Simulator(BlockingQueue<SimulationEvent> eventQueue) {
-        this.eventQueue = eventQueue;
+        this(eventQueue, false);
     }
+
+
 
     @Override
     public void run() {
         while (!finished) {
             try {
                 SimulationEvent event = this.eventQueue.take();
+
                 Command command = event.getCommand();
                 if (command.getCommandType() == CommandType.QUIT) {
                     this.finished = true;
+                    printSimulationFinishedMessage(event);
                 }
-                this.commandHistory.add(command);
+                printIfExtraInfoEnabled(event);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        printSimulationFinishedMessage();
+    }
+
+    private void printIfExtraInfoEnabled(SimulationEvent event) {
+        if(extraInfo) {
+            printSimulationState(event);
+            printVisitedCells(event);
+        }
     }
 
     private void printSimulationState(SimulationEvent event) {
@@ -50,8 +64,8 @@ public class Simulator implements Runnable {
         System.out.println(visitedCells);
     }
 
-    private void printSimulationFinishedMessage() {
-        String commandHistory = this.commandHistory.stream()
+    private void printSimulationFinishedMessage(SimulationEvent event) {
+        String commandHistory = event.getCommand().getContext().getBullDozer().getCommandHistory().stream()
                 .map(Command::toString).collect(Collectors.joining(", "));
         System.out.println(commandHistory);
     }
