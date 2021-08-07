@@ -23,7 +23,7 @@ public class BullDozer implements Runnable {
         this.eventQueue = eventQueue;
     }
 
-    public void setCommandQueue(Queue<Command> commandQueue) {
+    public synchronized void setCommandQueue(Queue<Command> commandQueue) {
         this.commandQueue = commandQueue;
     }
 
@@ -224,5 +224,6 @@ public class BullDozer implements Runnable {
         while (!this.finished && !this.commandQueue.isEmpty()) {
             execute(Objects.requireNonNull(this.commandQueue.poll()));
         }
+        this.commandQueue.clear();
     }
 }
