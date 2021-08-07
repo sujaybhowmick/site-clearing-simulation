@@ -11,11 +11,9 @@ import java.util.concurrent.BlockingQueue;
 public class BullDozer implements Runnable {
     private final SiteMap siteMap;
     private final BlockingQueue<SimulationEvent> eventQueue;
-
-    private Queue<Command> commandQueue;
-
     private final List<Command> commandHistory = new ArrayList<>();
     private final Set<Cell> visitedCells = new LinkedHashSet<>();
+    private Queue<Command> commandQueue;
     private Cell currentCell = new Cell(CellType.START, new Coordinate(0, -1));
     private Orientation orientation = Orientation.EAST;
 
@@ -88,7 +86,7 @@ public class BullDozer implements Runnable {
                 default:
                     throw new IllegalArgumentException(String.format("Wrong orientation %s provided in the command", orientation));
             }
-        }catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             raiseQuitCommand(command);
         }
     }
@@ -114,7 +112,7 @@ public class BullDozer implements Runnable {
                     throw new IllegalArgumentException(String.format("Wrong orientation %s provided in the command", orientation));
             }
             raiseCommandEvent(command);
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             raiseQuitCommand(command);
         }
 
@@ -141,7 +139,7 @@ public class BullDozer implements Runnable {
                     throw new IllegalArgumentException(String.format("Wrong orientation %s provided in the command", currentOrientation));
             }
             raiseCommandEvent(command);
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             raiseQuitCommand(command);
         }
     }
@@ -164,10 +162,10 @@ public class BullDozer implements Runnable {
 
     private void advanceEastOrWest(Command command, Orientation orientation) {
         Coordinate coordinate = getCurrentPosition().getCoordinate();
-        for(int y = 1; y <= command.getArg(); y++) {
+        for (int y = 1; y <= command.getArg(); y++) {
             int newY = 0;
             if (orientation == Orientation.EAST)
-                 newY = coordinate.getY() + y;
+                newY = coordinate.getY() + y;
             else if (orientation == Orientation.WEST)
                 newY = coordinate.getY() - y;
 
@@ -181,7 +179,7 @@ public class BullDozer implements Runnable {
 
     private void advanceSouthOrNorth(Command command, Orientation orientation) {
         Coordinate coordinate = getCurrentPosition().getCoordinate();
-        for(int x = 1; x <= command.getArg(); x++) {
+        for (int x = 1; x <= command.getArg(); x++) {
             int newX = 0;
             if (orientation == Orientation.SOUTH)
                 newX = coordinate.getX() + x;
@@ -198,7 +196,7 @@ public class BullDozer implements Runnable {
     private void checkIfMoveAllowed(Command command, Cell newCell) {
         if (newCell.getCellType() == CellType.PRESERVEDTREE) {
             raiseQuitCommand(command);
-        }else {
+        } else {
             raiseCommandEvent(command);
         }
     }
@@ -207,7 +205,7 @@ public class BullDozer implements Runnable {
         this.addEvent(new SimulationEvent(new QuitCommand(command.getContext())));
     }
 
-    private void raiseCommandEvent(Command command){
+    private void raiseCommandEvent(Command command) {
         this.addEvent(new SimulationEvent(command));
     }
 

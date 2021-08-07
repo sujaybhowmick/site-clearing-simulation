@@ -7,8 +7,12 @@ import com.sujay.simulator.sitemap.reader.MapReader;
 import com.sujay.simulator.sitemap.reader.SiteMapReader;
 import org.apache.commons.cli.*;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -17,9 +21,9 @@ public class Main {
 
     public static void main(String[] args) {
         CommandLine cmd = null;
-        try{
+        try {
             cmd = parseCmdArgs(args);
-        }catch(ParseException e) {
+        } catch (ParseException e) {
             printProgramHelp();
         }
 
@@ -33,7 +37,7 @@ public class Main {
         } catch (FileNotFoundException e) {
             printFileReadingErrorMessage(String.format("Cannot read file %s", fileName));
         }
-        assert fileReader !=  null;
+        assert fileReader != null;
 
         SiteMapReader.Builder builder = new SiteMapReader.Builder();
 

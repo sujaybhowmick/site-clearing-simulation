@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 
 public class Simulator implements Runnable {
     private final BlockingQueue<SimulationEvent> eventQueue;
-    private volatile boolean finished = false;
     private final boolean extraInfo;
+    private volatile boolean finished = false;
 
 
     public Simulator(BlockingQueue<SimulationEvent> eventQueue, boolean extraInfo) {
@@ -23,7 +23,6 @@ public class Simulator implements Runnable {
     public Simulator(BlockingQueue<SimulationEvent> eventQueue) {
         this(eventQueue, false);
     }
-
 
 
     @Override
@@ -45,7 +44,7 @@ public class Simulator implements Runnable {
     }
 
     private void printIfExtraInfoEnabled(SimulationEvent event) {
-        if(extraInfo) {
+        if (extraInfo) {
             printSimulationState(event);
             printVisitedCells(event);
         }

@@ -1,9 +1,5 @@
 package com.sujay.simulator.command;
 
-import com.sujay.simulator.BullDozer;
-import com.sujay.simulator.event.SimulationEvent;
-import com.sujay.simulator.sitemap.*;
-
 public class AdvanceCommand extends AbstractCommand {
     public final CommandType commandType = CommandType.ADVANCE;
 
