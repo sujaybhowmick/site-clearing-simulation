@@ -5,11 +5,10 @@ import com.sujay.simulator.event.SimulationEvent;
 import com.sujay.simulator.sitemap.SiteMap;
 import com.sujay.simulator.sitemap.reader.MapReader;
 import com.sujay.simulator.sitemap.reader.SiteMapReader;
+import org.apache.commons.cli.*;
 
 import java.io.*;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -17,11 +16,18 @@ public class Main {
     private static final String HELP_PROMPT = "(l)eft, (r)ight, (a)dvance <n>, (q)uit: ";
 
     public static void main(String[] args) {
-        if(args.length < 2 && !args[0].equals("--file")) {
-            printUsage();
+        CommandLine cmd = null;
+        try{
+            cmd = parseCmdArgs(args);
+        }catch(ParseException e) {
+            printProgramHelp();
         }
-        final String fileName = args[1];
+
         FileReader fileReader = null;
+        assert cmd != null;
+
+        String fileName = cmd.getOptionValue("file");
+
         try {
             fileReader = readFile(fileName);
         } catch (FileNotFoundException e) {
@@ -36,7 +42,7 @@ public class Main {
 
         final BlockingQueue<SimulationEvent> eventQueue = new LinkedBlockingQueue<>();
 
-        Simulator simulator = new Simulator(eventQueue);
+        Simulator simulator = createSimulatorInstance(eventQueue, cmd.hasOption("extraInfo"));
         BullDozer bullDozer = new BullDozer(siteMap, eventQueue);
 
         Queue<Command> commandQueue = getCommands(bullDozer);
@@ -46,6 +52,31 @@ public class Main {
         Thread simulatorThread = new Thread(simulator);
         simulatorThread.start();
         bullDozerThread.start();
+    }
+
+    private static Simulator createSimulatorInstance(BlockingQueue<SimulationEvent> queue, boolean extraInfo) {
+        return extraInfo ? new Simulator(queue, true) : new Simulator(queue);
+    }
+
+    private static CommandLine parseCmdArgs(String[] args) throws ParseException {
+        CommandLineParser parser = new DefaultParser();
+        return parser.parse(getOptions(), args);
+    }
+
+    private static void printProgramHelp() {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("java Main --file <file path> [--extraInfo]", getOptions());
+        System.exit(-1);
+    }
+
+    private static Options getOptions() {
+        Options options = new Options();
+        Option fileOption = new Option("f", "file", true, "Site Map file absolute path");
+        fileOption.setRequired(true);
+        Option extraInfoOption = new Option("e", "extraInfo", false, "Show extra information during simulation");
+        options.addOption(fileOption);
+        options.addOption(extraInfoOption);
+        return options;
     }
 
     private static FileReader readFile(String fileName) throws FileNotFoundException {
@@ -66,7 +97,7 @@ public class Main {
     }
 
     private static void printUsage() {
-        System.out.println("java <program> --file <filename>");
+        System.out.println("java <program> --file <filename> [--extraInfo]");
         System.exit(-1);
     }
 
@@ -75,7 +106,7 @@ public class Main {
         final Expression expression = new CommandExpression();
         final Queue<Command> commandQueue = new LinkedList<>();
         while (true) {
-            printHelp();
+            printSimulatorCommandHelp();
             Command command = expression.interpret(new CommandContext(bullDozer, input.nextLine()));
             commandQueue.add(command);
             if (checkIfQuitCommand(command)) break;
@@ -87,7 +118,7 @@ public class Main {
         return command instanceof QuitCommand;
     }
 
-    private static void printHelp() {
+    private static void printSimulatorCommandHelp() {
         System.out.print(HELP_PROMPT);
     }
 }
