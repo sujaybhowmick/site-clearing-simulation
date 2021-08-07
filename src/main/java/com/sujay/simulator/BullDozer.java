@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.concurrent.BlockingQueue;
 
 public class BullDozer implements Runnable {
+    private volatile boolean finished = false;
     private final SiteMap siteMap;
     private final BlockingQueue<SimulationEvent> eventQueue;
     private final List<Command> commandHistory = new ArrayList<>();
@@ -175,9 +176,9 @@ public class BullDozer implements Runnable {
 
             Coordinate newCoordinate = new Coordinate(coordinate.getX(), newY);
             Cell newCell = siteMap.getCellAt(newCoordinate);
-            checkIfMoveAllowed(command, newCell);
             this.visitedCells.add(newCell);
             this.updateCurrentPosition(newCell);
+            quitIfRestrictedMove(command, newCell);
         }
     }
 
@@ -191,14 +192,15 @@ public class BullDozer implements Runnable {
                 newX = coordinate.getX() - x;
             Coordinate newCoordinate = new Coordinate(newX, coordinate.getY());
             Cell newCell = siteMap.getCellAt(newCoordinate);
-            checkIfMoveAllowed(command, newCell);
             this.visitedCells.add(newCell);
             this.updateCurrentPosition(newCell);
+            quitIfRestrictedMove(command, newCell);
         }
     }
 
-    private void checkIfMoveAllowed(Command command, Cell newCell) {
+    private void quitIfRestrictedMove(Command command, Cell newCell) {
         if (newCell.getCellType() == CellType.PRESERVEDTREE) {
+            this.finished = true;
             raiseQuitCommand(command);
         } else {
             raiseCommandEvent(command);
@@ -219,10 +221,8 @@ public class BullDozer implements Runnable {
 
     @Override
     public void run() {
-        if (this.commandQueue != null) {
-            while (!this.commandQueue.isEmpty()) {
-                execute(this.commandQueue.poll());
-            }
+        while (!this.finished && !this.commandQueue.isEmpty()) {
+            execute(Objects.requireNonNull(this.commandQueue.poll()));
         }
     }
 }
