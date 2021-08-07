@@ -177,8 +177,7 @@ public class BullDozer implements Runnable {
             Cell newCell = siteMap.getCellAt(newCoordinate);
             this.visitedCells.add(newCell);
             this.updateCurrentPosition(newCell);
-            if (chekIfRestrictedMove(newCell)){
-                raiseQuitCommand(command);
+            if (checkAndQuitIfRestrictedMove(newCell, command)){
                 break;
             } else {
                 raiseCommandEvent(command);
@@ -198,9 +197,7 @@ public class BullDozer implements Runnable {
             Cell newCell = siteMap.getCellAt(newCoordinate);
             this.visitedCells.add(newCell);
             this.updateCurrentPosition(newCell);
-
-            if (chekIfRestrictedMove(newCell)){
-                raiseQuitCommand(command);
+            if (checkAndQuitIfRestrictedMove(newCell, command)){
                 break;
             } else {
                 raiseCommandEvent(command);
@@ -208,10 +205,11 @@ public class BullDozer implements Runnable {
         }
     }
 
-
-
-    private boolean chekIfRestrictedMove(Cell newCell) {
-        return newCell.getCellType() == CellType.PRESERVEDTREE;
+    private boolean checkAndQuitIfRestrictedMove(Cell newCell, Command command) {
+        boolean isRestricted = newCell.getCellType() == CellType.PRESERVEDTREE;
+        if (isRestricted)
+            raiseQuitCommand(command);
+        return isRestricted;
     }
 
     private void raiseQuitCommand(Command command) {
