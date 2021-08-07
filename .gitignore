@@ -5,3 +5,4 @@ build/
 *.iml
 *.iws
 *.ipr
+src/main/resources/site-map-input.txt
