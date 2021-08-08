@@ -6,5 +6,5 @@ import com.sujay.simulator.sitemap.SiteMap;
 import java.util.Set;
 
 public interface CostCalculator {
-    CostReport calculate(Set<Cell> visitedCell, SiteMap siteMap);
+    CostReport calculate(CalculatorContext context);
 }

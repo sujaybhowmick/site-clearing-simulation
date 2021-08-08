@@ -13,6 +13,7 @@ public class BullDozer implements Runnable {
     private final BlockingQueue<SimulationEvent> eventQueue;
     private final List<Command> commandHistory = new ArrayList<>();
     private final Set<Cell> visitedCells = new LinkedHashSet<>();
+    private final Map<Cell, Integer> visitedCellsCount = new HashMap<>();
     private Queue<Command> commandQueue;
     private Cell currentCell = new Cell(CellType.START, new Coordinate(0, -1));
     private Orientation orientation = Orientation.EAST;
@@ -176,6 +177,7 @@ public class BullDozer implements Runnable {
             Coordinate newCoordinate = new Coordinate(coordinate.getX(), newY);
             Cell newCell = siteMap.getCellAt(newCoordinate);
             this.visitedCells.add(newCell);
+            incrementCellVisitCount(newCell);
             this.updateCurrentPosition(newCell);
             if (checkAndQuitIfRestrictedMove(newCell, command)){
                 break;
@@ -196,6 +198,7 @@ public class BullDozer implements Runnable {
             Coordinate newCoordinate = new Coordinate(newX, coordinate.getY());
             Cell newCell = siteMap.getCellAt(newCoordinate);
             this.visitedCells.add(newCell);
+            incrementCellVisitCount(newCell);
             this.updateCurrentPosition(newCell);
             if (checkAndQuitIfRestrictedMove(newCell, command)){
                 break;
@@ -203,6 +206,12 @@ public class BullDozer implements Runnable {
                 raiseCommandEvent(command);
             }
         }
+    }
+
+    private void incrementCellVisitCount(Cell newCell) {
+        if (this.visitedCellsCount.containsKey(newCell))
+            this.visitedCellsCount.put(newCell, this.visitedCellsCount.get(newCell) + 1);
+        else this.visitedCellsCount.put(newCell, 1);
     }
 
     private boolean checkAndQuitIfRestrictedMove(Cell newCell, Command command) {
@@ -222,6 +231,10 @@ public class BullDozer implements Runnable {
 
     public List<Command> getCommandHistory() {
         return commandHistory;
+    }
+
+    public Map<Cell, Integer> getVisitedCellsCount() {
+        return visitedCellsCount;
     }
 
     @Override

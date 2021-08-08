@@ -2,6 +2,7 @@ package com.sujay.simulator;
 
 import com.sujay.simulator.command.Command;
 import com.sujay.simulator.command.CommandType;
+import com.sujay.simulator.costing.CalculatorContext;
 import com.sujay.simulator.costing.CostCalculator;
 import com.sujay.simulator.event.SimulationEvent;
 import com.sujay.simulator.sitemap.Cell;
@@ -52,7 +53,9 @@ public class Simulator implements Runnable {
     private void printCost(SimulationEvent event) {
         System.out.println("Unvisited Cells");
         final BullDozer bullDozer = event.getCommand().getContext().getBullDozer();
-        this.costCalculator.calculate(bullDozer.getVisitedCells(), bullDozer.getSiteMap());
+        CalculatorContext context = new CalculatorContext(bullDozer.getCommandHistory(),
+                bullDozer.getVisitedCells(), bullDozer.getVisitedCellsCount(), bullDozer.getSiteMap());
+        this.costCalculator.calculate(context);
     }
 
     private void printIfExtraInfoEnabled(SimulationEvent event) {
