@@ -2,6 +2,7 @@ package com.sujay.simulator;
 
 import com.sujay.simulator.command.Command;
 import com.sujay.simulator.command.CommandType;
+import com.sujay.simulator.costing.CostCalculator;
 import com.sujay.simulator.event.SimulationEvent;
 import com.sujay.simulator.sitemap.Cell;
 
@@ -14,14 +15,17 @@ public class Simulator implements Runnable {
     private final boolean extraInfo;
     private volatile boolean finished = false;
 
+    private final CostCalculator costCalculator;
 
-    public Simulator(BlockingQueue<SimulationEvent> eventQueue, boolean extraInfo) {
+
+    public Simulator(CostCalculator costCalculator, BlockingQueue<SimulationEvent> eventQueue, boolean extraInfo) {
         this.eventQueue = eventQueue;
         this.extraInfo = extraInfo;
+        this.costCalculator = costCalculator;
     }
 
-    public Simulator(BlockingQueue<SimulationEvent> eventQueue) {
-        this(eventQueue, false);
+    public Simulator(CostCalculator costCalculator, BlockingQueue<SimulationEvent> eventQueue) {
+        this(costCalculator, eventQueue, false);
     }
 
 
@@ -35,12 +39,20 @@ public class Simulator implements Runnable {
                 if (command.getCommandType() == CommandType.QUIT) {
                     this.finished = true;
                     printSimulationFinishedMessage(event);
+                    printCost(event);
+                    printGoodByMessage();
                 }
                 printIfExtraInfoEnabled(event);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void printCost(SimulationEvent event) {
+        System.out.println("Unvisited Cells");
+        final BullDozer bullDozer = event.getCommand().getContext().getBullDozer();
+        this.costCalculator.calculate(bullDozer.getVisitedCells(), bullDozer.getSiteMap());
     }
 
     private void printIfExtraInfoEnabled(SimulationEvent event) {
@@ -67,6 +79,10 @@ public class Simulator implements Runnable {
         String commandHistory = event.getCommand().getContext().getBullDozer().getCommandHistory().stream()
                 .map(Command::toString).collect(Collectors.joining(", "));
         System.out.println(commandHistory);
+    }
+
+    private void printGoodByMessage() {
+        System.out.println("Thank you for using Aconex site clearing simulator");
     }
 }
 

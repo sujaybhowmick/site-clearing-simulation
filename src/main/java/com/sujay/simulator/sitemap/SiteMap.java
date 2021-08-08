@@ -1,5 +1,9 @@
 package com.sujay.simulator.sitemap;
 
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class SiteMap {
     private final Cell[][] grid;
 
@@ -24,6 +28,13 @@ public class SiteMap {
         ensureBounds(coordinate);
         return this.grid[coordinate.getX()][coordinate.getY()];
     }
+
+    public Set<Cell> getAllCells() {
+        return Arrays.stream(this.grid)
+                .flatMap(Arrays::stream)
+                .collect(Collectors.toSet());
+    }
+
 
     private void ensureBounds(Coordinate coordinate) {
         final String message = String.format("Coordinates %s are out of bounds", coordinate);

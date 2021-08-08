@@ -1,6 +1,8 @@
 package com.sujay.simulator;
 
 import com.sujay.simulator.command.*;
+import com.sujay.simulator.costing.CostCalculator;
+import com.sujay.simulator.costing.SiteClearingCostCalculator;
 import com.sujay.simulator.event.SimulationEvent;
 import com.sujay.simulator.sitemap.SiteMap;
 import com.sujay.simulator.sitemap.reader.MapReader;
@@ -59,7 +61,8 @@ public class Main {
     }
 
     private static Simulator createSimulatorInstance(BlockingQueue<SimulationEvent> queue, boolean extraInfo) {
-        return extraInfo ? new Simulator(queue, true) : new Simulator(queue);
+        final CostCalculator costCalculator = new SiteClearingCostCalculator();
+        return extraInfo ? new Simulator(costCalculator, queue, true) : new Simulator(costCalculator, queue);
     }
 
     private static CommandLine parseCmdArgs(String[] args) throws ParseException {
