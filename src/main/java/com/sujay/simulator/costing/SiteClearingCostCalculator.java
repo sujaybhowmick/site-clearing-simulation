@@ -48,7 +48,7 @@ public class SiteClearingCostCalculator implements CostCalculator {
     }
 
     private CostReportItem calculateUnclearedCellsCost(Set<Cell> visitedCells, SiteMap siteMap) {
-        final Set<Cell> unclearedCells = getUnvisitedCells(visitedCells, siteMap.getAllCells());
+        final Set<Cell> unclearedCells = getUnVisitedCells(visitedCells, siteMap.getAllCells());
         final CostCredit unclearedCellCredit = CostCredit.UNCLEARED_CELL;
         int unclearedCellCount = unclearedCells.size();
         return new CostReportItem(unclearedCellCredit.getItemDescription(), unclearedCellCount,
@@ -80,7 +80,7 @@ public class SiteClearingCostCalculator implements CostCalculator {
         return visitedCells.containsKey(cell) && visitedCells.get(cell) > 1 ? Activity.VISITING_CLEARED_LAND.getFuelUnit() : 0;
     }
 
-    private Set<Cell> getUnvisitedCells(Set<Cell> visitedCells, Set<Cell> allCells) {
+    private Set<Cell> getUnVisitedCells(Set<Cell> visitedCells, Set<Cell> allCells) {
         allCells.removeAll(visitedCells);
         allCells.removeAll(filterCellsByType(allCells, CellType.PRESERVEDTREE));
         return allCells;
