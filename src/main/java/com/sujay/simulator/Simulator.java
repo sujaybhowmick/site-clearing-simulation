@@ -14,9 +14,8 @@ import java.util.stream.Collectors;
 public class Simulator implements Runnable {
     private final BlockingQueue<SimulationEvent> eventQueue;
     private final boolean extraInfo;
-    private volatile boolean finished = false;
-
     private final CostCalculator costCalculator;
+    private volatile boolean finished = false;
 
 
     public Simulator(CostCalculator costCalculator, BlockingQueue<SimulationEvent> eventQueue, boolean extraInfo) {

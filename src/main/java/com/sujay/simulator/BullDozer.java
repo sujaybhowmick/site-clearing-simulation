@@ -179,7 +179,7 @@ public class BullDozer implements Runnable {
             this.visitedCells.add(newCell);
             incrementCellVisitCount(newCell);
             this.updateCurrentPosition(newCell);
-            if (checkAndQuitIfRestrictedMove(newCell, command)){
+            if (checkAndQuitIfRestrictedMove(newCell, command)) {
                 break;
             } else {
                 raiseCommandEvent(command);
@@ -200,7 +200,7 @@ public class BullDozer implements Runnable {
             this.visitedCells.add(newCell);
             incrementCellVisitCount(newCell);
             this.updateCurrentPosition(newCell);
-            if (checkAndQuitIfRestrictedMove(newCell, command)){
+            if (checkAndQuitIfRestrictedMove(newCell, command)) {
                 break;
             } else {
                 raiseCommandEvent(command);

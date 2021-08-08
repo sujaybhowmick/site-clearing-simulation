@@ -25,8 +25,8 @@ public class SiteClearingCostCalculator implements CostCalculator {
     }
 
     private CostReportItem calculateFuelUsageCost(Set<Cell> visitedCells, Map<Cell, Integer> visitedCellsCount) {
-        int totalFuelUsage  = 0;
-        for (Cell cell: visitedCells) {
+        int totalFuelUsage = 0;
+        for (Cell cell : visitedCells) {
             switch (cell.getCellType()) {
                 case CLEAR:
                     totalFuelUsage = totalFuelUsage + Activity.CLEAR_PLAIN_LAND.getFuelUnit() +
@@ -59,7 +59,7 @@ public class SiteClearingCostCalculator implements CostCalculator {
     private CostReportItem calculateCommunicationOverheadCost(List<Command> commands) {
         final CostCredit communicationOverheadCredit = CostCredit.COMMUNICATION_OVERHEAD;
         return new CostReportItem(communicationOverheadCredit.getItemDescription(),
-                commands.size(),  communicationOverheadCredit.getCredit() * commands.size());
+                commands.size(), communicationOverheadCredit.getCredit() * commands.size());
     }
 
     private CostReportItem calculateProtectedTreeRemovalCost(Set<Cell> visitedCells) {
