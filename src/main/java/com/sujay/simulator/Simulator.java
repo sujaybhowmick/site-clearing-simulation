@@ -4,6 +4,7 @@ import com.sujay.simulator.command.Command;
 import com.sujay.simulator.command.CommandType;
 import com.sujay.simulator.costing.CalculatorContext;
 import com.sujay.simulator.costing.CostCalculator;
+import com.sujay.simulator.costing.CostReportGenerator;
 import com.sujay.simulator.event.SimulationEvent;
 import com.sujay.simulator.sitemap.Cell;
 
@@ -16,16 +17,23 @@ public class Simulator implements Runnable {
     private final boolean extraInfo;
     private final CostCalculator costCalculator;
     private volatile boolean finished = false;
+    private final CostReportGenerator reportGenerator;
 
 
-    public Simulator(CostCalculator costCalculator, BlockingQueue<SimulationEvent> eventQueue, boolean extraInfo) {
+    public Simulator(CostCalculator costCalculator,
+                     CostReportGenerator reportGenerator,
+                     BlockingQueue<SimulationEvent> eventQueue,
+                     boolean extraInfo) {
         this.eventQueue = eventQueue;
         this.extraInfo = extraInfo;
         this.costCalculator = costCalculator;
+        this.reportGenerator = reportGenerator;
     }
 
-    public Simulator(CostCalculator costCalculator, BlockingQueue<SimulationEvent> eventQueue) {
-        this(costCalculator, eventQueue, false);
+    public Simulator(CostCalculator costCalculator,
+                     CostReportGenerator reportGenerator,
+                     BlockingQueue<SimulationEvent> eventQueue) {
+        this(costCalculator, reportGenerator, eventQueue, false);
     }
 
 
@@ -50,11 +58,10 @@ public class Simulator implements Runnable {
     }
 
     private void printCost(SimulationEvent event) {
-        System.out.println("Unvisited Cells");
         final BullDozer bullDozer = event.getCommand().getContext().getBullDozer();
         CalculatorContext context = new CalculatorContext(bullDozer.getCommandHistory(),
                 bullDozer.getVisitedCells(), bullDozer.getVisitedCellsCount(), bullDozer.getSiteMap());
-        this.costCalculator.calculate(context);
+        this.reportGenerator.renderReport(this.costCalculator.calculate(context));
     }
 
     private void printIfExtraInfoEnabled(SimulationEvent event) {
