@@ -25,7 +25,9 @@ public class ConsoleRender implements CostReportRender {
 
     private void printFooter(Set<CostReportItem> items) {
         String formatString = "%s%69d\n";
-        Integer totalCost = items.stream().map(CostReportItem::getCost).reduce(0, Integer::sum);
+        Integer totalCost = items.stream()
+                .map(CostReportItem::getCost)
+                .reduce(0, Integer::sum);
         System.out.println("-".repeat(75));
         System.out.printf(formatString, "Total", totalCost);
         System.out.println();
