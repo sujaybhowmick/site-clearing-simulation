@@ -16,8 +16,8 @@ public class Simulator implements Runnable {
     private final BlockingQueue<SimulationEvent> eventQueue;
     private final boolean extraInfo;
     private final CostCalculator costCalculator;
-    private volatile boolean finished = false;
     private final CostReportRender reportGenerator;
+    private volatile boolean finished = false;
 
 
     public Simulator(CostCalculator costCalculator,

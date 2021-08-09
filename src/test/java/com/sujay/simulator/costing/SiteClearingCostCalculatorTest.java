@@ -1,7 +1,10 @@
 package com.sujay.simulator.costing;
 
 import com.sujay.simulator.BullDozer;
-import com.sujay.simulator.command.*;
+import com.sujay.simulator.command.Command;
+import com.sujay.simulator.command.CommandContext;
+import com.sujay.simulator.command.CommandExpression;
+import com.sujay.simulator.command.Expression;
 import com.sujay.simulator.sitemap.Cell;
 import com.sujay.simulator.sitemap.SiteMap;
 import com.sujay.simulator.sitemap.reader.MapReader;
@@ -16,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class SiteClearingCostCalculatorTest {
     private SiteMapReader.Builder builder;

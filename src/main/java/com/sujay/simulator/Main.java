@@ -1,7 +1,10 @@
 package com.sujay.simulator;
 
 import com.sujay.simulator.command.*;
-import com.sujay.simulator.costing.*;
+import com.sujay.simulator.costing.ConsoleRender;
+import com.sujay.simulator.costing.CostCalculator;
+import com.sujay.simulator.costing.CostReportRender;
+import com.sujay.simulator.costing.SiteClearingCostCalculator;
 import com.sujay.simulator.event.SimulationEvent;
 import com.sujay.simulator.sitemap.SiteMap;
 import com.sujay.simulator.sitemap.reader.MapReader;

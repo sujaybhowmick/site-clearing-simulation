@@ -1,6 +1,9 @@
 package com.sujay.simulator;
 
-import com.sujay.simulator.command.*;
+import com.sujay.simulator.command.Command;
+import com.sujay.simulator.command.CommandContext;
+import com.sujay.simulator.command.CommandExpression;
+import com.sujay.simulator.command.Expression;
 import com.sujay.simulator.sitemap.*;
 import com.sujay.simulator.sitemap.reader.MapReader;
 import com.sujay.simulator.sitemap.reader.SiteMapReader;
@@ -11,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.io.StringReader;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BullDozerTest {
     private SiteMapReader.Builder builder;
