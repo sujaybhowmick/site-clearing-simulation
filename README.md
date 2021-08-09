@@ -7,7 +7,7 @@ Java 11 Runtime
 ## Run Tests
 
 ```bash
- ~/l/site-clearing-simulation$ ./gradlew clean check                                                                                                                                                                                           Mon Aug  9 16:19:23 2021
+~/l/site-clearing-simulation$ ./gradlew clean check
 
 BUILD SUCCESSFUL in 1s
 5 actionable tasks: 5 executed
@@ -16,7 +16,7 @@ BUILD SUCCESSFUL in 1s
 ## Build Jar
 
 ```bash
- ~/l/site-clearing-simulation$ ./gradlew clean jar                                                                                                                                                                                    1197ms  Mon Aug  9 16:21:35 2021
+~/l/site-clearing-simulation$ ./gradlew clean jar
 
 BUILD SUCCESSFUL in 870ms
 4 actionable tasks: 4 executed
@@ -25,7 +25,7 @@ BUILD SUCCESSFUL in 870ms
 ## Run Simulation Program
 
 ```bash
- ~/l/site-clearing-simulation$ java -jar build/libs/site-clearing-simulation-1.0-SNAPSHOT.jar --file ./site-map-input.txt                                              (l)eft, (r)ight, (a)dvance <n>, (q)uit: a 4
+ ~/l/site-clearing-simulation$ java -jar build/libs/site-clearing-simulation-1.0-SNAPSHOT.jar --file ./site-map-input.txt                        (l)eft, (r)ight, (a)dvance <n>, (q)uit: a 4
 (l)eft, (r)ight, (a)dvance <n>, (q)uit: r
 (l)eft, (r)ight, (a)dvance <n>, (q)uit: a 4
 (l)eft, (r)ight, (a)dvance <n>, (q)uit: l
