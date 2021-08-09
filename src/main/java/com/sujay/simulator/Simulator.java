@@ -4,7 +4,7 @@ import com.sujay.simulator.command.Command;
 import com.sujay.simulator.command.CommandType;
 import com.sujay.simulator.costing.CalculatorContext;
 import com.sujay.simulator.costing.CostCalculator;
-import com.sujay.simulator.costing.CostReportGenerator;
+import com.sujay.simulator.costing.CostReportRender;
 import com.sujay.simulator.event.SimulationEvent;
 import com.sujay.simulator.sitemap.Cell;
 
@@ -17,11 +17,11 @@ public class Simulator implements Runnable {
     private final boolean extraInfo;
     private final CostCalculator costCalculator;
     private volatile boolean finished = false;
-    private final CostReportGenerator reportGenerator;
+    private final CostReportRender reportGenerator;
 
 
     public Simulator(CostCalculator costCalculator,
-                     CostReportGenerator reportGenerator,
+                     CostReportRender reportGenerator,
                      BlockingQueue<SimulationEvent> eventQueue,
                      boolean extraInfo) {
         this.eventQueue = eventQueue;
@@ -31,7 +31,7 @@ public class Simulator implements Runnable {
     }
 
     public Simulator(CostCalculator costCalculator,
-                     CostReportGenerator reportGenerator,
+                     CostReportRender reportGenerator,
                      BlockingQueue<SimulationEvent> eventQueue) {
         this(costCalculator, reportGenerator, eventQueue, false);
     }

@@ -1,8 +1,10 @@
 package com.sujay.simulator.costing;
 
-public class CostReportGenerator {
+public interface CostReportRender {
 
-    public void renderReport(CostReport costReport) {
+    void renderReport(CostReport report);
+
+    /*public void renderReport(CostReport costReport) {
         String header = "Item                                                 Quantity   Cost";
         System.out.println(padStringWithSpaces(header));
         int total = 0;
@@ -19,5 +21,5 @@ public class CostReportGenerator {
 
     private String padStringWithSpaces(String str) {
         return str + " ".repeat(Math.max(0, 60 - str.length()));
-    }
+    }*/
 }

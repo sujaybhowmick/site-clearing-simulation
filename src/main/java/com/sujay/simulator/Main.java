@@ -1,9 +1,7 @@
 package com.sujay.simulator;
 
 import com.sujay.simulator.command.*;
-import com.sujay.simulator.costing.CostCalculator;
-import com.sujay.simulator.costing.CostReportGenerator;
-import com.sujay.simulator.costing.SiteClearingCostCalculator;
+import com.sujay.simulator.costing.*;
 import com.sujay.simulator.event.SimulationEvent;
 import com.sujay.simulator.sitemap.SiteMap;
 import com.sujay.simulator.sitemap.reader.MapReader;
@@ -63,7 +61,7 @@ public class Main {
 
     private static Simulator createSimulatorInstance(BlockingQueue<SimulationEvent> queue, boolean extraInfo) {
         final CostCalculator costCalculator = new SiteClearingCostCalculator();
-        final CostReportGenerator reportGenerator = new CostReportGenerator();
+        final CostReportRender reportGenerator = new ConsoleRender();
         return extraInfo ?
                 new Simulator(costCalculator, reportGenerator, queue, true) :
                 new Simulator(costCalculator, reportGenerator, queue);
