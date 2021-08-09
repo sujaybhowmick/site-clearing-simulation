@@ -25,7 +25,8 @@ BUILD SUCCESSFUL in 870ms
 ## Run Simulation Program
 
 ```bash
- ~/l/site-clearing-simulation$ java -jar build/libs/site-clearing-simulation-1.0-SNAPSHOT.jar --file ./site-map-input.txt                        (l)eft, (r)ight, (a)dvance <n>, (q)uit: a 4
+ ~/l/site-clearing-simulation$ java -jar build/libs/site-clearing-simulation-1.0-SNAPSHOT.jar --file ./site-map-input.txt
+(l)eft, (r)ight, (a)dvance <n>, (q)uit: a 4
 (l)eft, (r)ight, (a)dvance <n>, (q)uit: r
 (l)eft, (r)ight, (a)dvance <n>, (q)uit: a 4
 (l)eft, (r)ight, (a)dvance <n>, (q)uit: l
