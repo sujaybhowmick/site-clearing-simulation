@@ -222,6 +222,7 @@ public class BullDozer implements Runnable {
     }
 
     private void raiseQuitCommand(Command command) {
+        this.commandHistory.add(command);
         this.addEvent(new SimulationEvent(new QuitCommand(command.getContext())));
     }
 
