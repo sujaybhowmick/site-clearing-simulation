@@ -14,17 +14,12 @@ public class BullDozer {
     private final List<Command> commandHistory = new ArrayList<>();
     private final Set<Cell> visitedCells = new LinkedHashSet<>();
     private final Map<Cell, Integer> visitedCellsCount = new HashMap<>();
-    private Queue<Command> commandQueue;
     private Cell currentCell = new Cell(CellType.START, new Coordinate(0, -1));
     private Orientation orientation = Orientation.EAST;
 
     public BullDozer(SiteMap siteMap, BlockingQueue<SimulationEvent> eventQueue) {
         this.siteMap = siteMap;
         this.eventQueue = eventQueue;
-    }
-
-    public synchronized void setCommandQueue(Queue<Command> commandQueue) {
-        this.commandQueue = commandQueue;
     }
 
     public void execute(Command command) {
@@ -39,15 +34,15 @@ public class BullDozer {
         return siteMap;
     }
 
-    private synchronized void updateCurrentPosition(Cell currentCell) {
+    private void updateCurrentPosition(Cell currentCell) {
         this.currentCell = currentCell;
     }
 
-    private synchronized void updateOrientation(Orientation orientation) {
+    private void updateOrientation(Orientation orientation) {
         this.orientation = orientation;
     }
 
-    public synchronized void addVisitedCell(Cell cell) {
+    public void addVisitedCell(Cell cell) {
         this.visitedCells.add(cell);
     }
 
@@ -68,7 +63,7 @@ public class BullDozer {
         return visitedCells;
     }
 
-    public synchronized void moveBullDozer(Command command) {
+    public void moveBullDozer(Command command) {
         try {
             commandHistory.add(command);
             Orientation orientation = getOrientation();
@@ -93,7 +88,7 @@ public class BullDozer {
         }
     }
 
-    public synchronized void turnLeft(Command command) {
+    public void turnLeft(Command command) {
         try {
             this.commandHistory.add(command);
             Orientation orientation = getOrientation();
@@ -120,7 +115,7 @@ public class BullDozer {
 
     }
 
-    public synchronized void turnRight(Command command) {
+    public void turnRight(Command command) {
         try {
             this.commandHistory.add(command);
             Orientation currentOrientation = getOrientation();
@@ -146,7 +141,7 @@ public class BullDozer {
         }
     }
 
-    public synchronized void quit(Command command) {
+    public void quit(Command command) {
         raiseQuitCommand(command);
     }
 
