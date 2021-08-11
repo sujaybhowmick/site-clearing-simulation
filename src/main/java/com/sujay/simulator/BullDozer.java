@@ -8,7 +8,7 @@ import com.sujay.simulator.sitemap.*;
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
 
-public class BullDozer implements Runnable {
+public class BullDozer {
     private final SiteMap siteMap;
     private final BlockingQueue<SimulationEvent> eventQueue;
     private final List<Command> commandHistory = new ArrayList<>();
@@ -27,7 +27,7 @@ public class BullDozer implements Runnable {
         this.commandQueue = commandQueue;
     }
 
-    private void execute(Command command) {
+    public void execute(Command command) {
         command.execute();
     }
 
@@ -58,6 +58,7 @@ public class BullDozer implements Runnable {
             e.printStackTrace();
         }
     }
+
 
     public Orientation getOrientation() {
         return orientation;
@@ -238,10 +239,4 @@ public class BullDozer implements Runnable {
         return visitedCellsCount;
     }
 
-    @Override
-    public void run() {
-        while (!this.commandQueue.isEmpty()) {
-            execute(Objects.requireNonNull(this.commandQueue.poll()));
-        }
-    }
 }

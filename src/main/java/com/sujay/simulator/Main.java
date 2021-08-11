@@ -14,8 +14,6 @@ import org.apache.commons.cli.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -52,14 +50,9 @@ public class Main {
 
         Simulator simulator = createSimulatorInstance(eventQueue, cmd.hasOption("extraInfo"));
         BullDozer bullDozer = new BullDozer(siteMap, eventQueue);
-
-        Queue<Command> commandQueue = getCommands(bullDozer);
-        bullDozer.setCommandQueue(commandQueue);
-
-        Thread bullDozerThread = new Thread(bullDozer);
         Thread simulatorThread = new Thread(simulator);
         simulatorThread.start();
-        bullDozerThread.start();
+        readCommands(bullDozer);
     }
 
     private static Simulator createSimulatorInstance(BlockingQueue<SimulationEvent> queue, boolean extraInfo) {
@@ -113,17 +106,15 @@ public class Main {
         System.exit(-1);
     }
 
-    private static Queue<Command> getCommands(BullDozer bullDozer) {
+    private static void readCommands(BullDozer bullDozer) {
         Scanner input = new Scanner(System.in);
         final Expression expression = new CommandExpression();
-        final Queue<Command> commandQueue = new LinkedList<>();
         while (true) {
             printSimulatorCommandHelp();
             Command command = expression.interpret(new CommandContext(bullDozer, input.nextLine()));
-            commandQueue.add(command);
+            bullDozer.execute(command);
             if (checkIfQuitCommand(command)) break;
         }
-        return commandQueue;
     }
 
     private static boolean checkIfQuitCommand(Command command) {
