@@ -101,11 +101,6 @@ public class Main {
         System.exit(-1);
     }
 
-    private static void printUsage() {
-        System.out.println("java <program> --file <filename> [--extraInfo]");
-        System.exit(-1);
-    }
-
     private static void readCommands(BullDozer bullDozer) {
         Scanner input = new Scanner(System.in);
         final Expression expression = new CommandExpression();
