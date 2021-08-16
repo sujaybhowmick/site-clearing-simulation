@@ -52,6 +52,7 @@ public class Main {
         BullDozer bullDozer = new BullDozer(siteMap, eventQueue);
         Thread simulatorThread = new Thread(simulator);
         simulatorThread.start();
+        printSiteMap(siteMap);
         readCommands(bullDozer);
     }
 
@@ -102,6 +103,7 @@ public class Main {
     }
 
     private static void readCommands(BullDozer bullDozer) {
+        System.out.println();
         Scanner input = new Scanner(System.in);
         final Expression expression = new CommandExpression();
         while (true) {
@@ -118,5 +120,10 @@ public class Main {
 
     private static void printSimulatorCommandHelp() {
         System.out.print(HELP_PROMPT);
+    }
+
+    private static void printSiteMap(SiteMap siteMap) {
+        System.out.println("Site Map Loaded...");
+        siteMap.printMap();
     }
 }

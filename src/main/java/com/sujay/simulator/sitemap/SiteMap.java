@@ -18,7 +18,7 @@ public class SiteMap {
     public void printMap() {
         for (Cell[] cells : grid) {
             for (Cell cell : cells) {
-                System.out.print(cell + " ");
+                System.out.print(cell.getCellType() + " ");
             }
             System.out.println();
         }
