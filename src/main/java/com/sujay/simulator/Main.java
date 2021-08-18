@@ -41,9 +41,8 @@ public class Main {
         }
         assert fileReader != null;
 
-        SiteMapReader.Builder builder = new SiteMapReader.Builder();
+        final MapReader reader = new SiteMapReader(fileReader);
 
-        final MapReader<SiteMap> reader = builder.reader(fileReader).build();
         final SiteMap siteMap = reader.readMap();
 
         final BlockingQueue<SimulationEvent> eventQueue = new LinkedBlockingQueue<>();

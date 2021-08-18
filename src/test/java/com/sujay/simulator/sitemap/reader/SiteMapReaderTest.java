@@ -14,11 +14,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 class SiteMapReaderTest {
-    SiteMapReader.Builder builder;
 
     @BeforeEach
     void setUp() {
-        this.builder = new SiteMapReader.Builder();
     }
 
     @AfterEach
@@ -28,7 +26,7 @@ class SiteMapReaderTest {
     @Test
     void readMap() {
         final String input = "oooo\noror\ntooT";
-        final MapReader<SiteMap> reader = builder.reader(new StringReader(input)).build();
+        final MapReader reader = new SiteMapReader(new StringReader(input));
         SiteMap siteMap = reader.readMap();
         Coordinate coordinate11 = new Coordinate(1, 1);
         Cell cell11 = siteMap.getCellAt(coordinate11);
@@ -46,7 +44,7 @@ class SiteMapReaderTest {
     @Test
     void readMapOutOfBounds() {
         final String input = "oooo\noror\ntooT";
-        final MapReader<SiteMap> reader = builder.reader(new StringReader(input)).build();
+        final MapReader reader = new SiteMapReader(new StringReader(input));
         SiteMap siteMap = reader.readMap();
         Coordinate coordinate14 = new Coordinate(1, 4);
         try {
@@ -62,7 +60,7 @@ class SiteMapReaderTest {
     @Test
     void printSiteMap() {
         final String input = "oooo\noror\ntooT";
-        final MapReader<SiteMap> reader = builder.reader(new StringReader(input)).build();
+        final MapReader reader = new SiteMapReader(new StringReader(input));
         SiteMap siteMap = reader.readMap();
         siteMap.printMap();
     }

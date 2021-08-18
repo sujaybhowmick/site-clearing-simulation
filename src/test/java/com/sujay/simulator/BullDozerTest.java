@@ -17,16 +17,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BullDozerTest {
-    private SiteMapReader.Builder builder;
     private BullDozer bullDozer;
     private Expression expression;
 
     @BeforeEach
     void setUp() {
         this.expression = new CommandExpression();
-        this.builder = new SiteMapReader.Builder();
         final String input = "oooo\noror\ntooT";
-        final MapReader<SiteMap> reader = builder.reader(new StringReader(input)).build();
+        final MapReader reader = new SiteMapReader(new StringReader(input));
         this.bullDozer = new BullDozer(reader.readMap(), new LinkedBlockingQueue<>());
     }
 

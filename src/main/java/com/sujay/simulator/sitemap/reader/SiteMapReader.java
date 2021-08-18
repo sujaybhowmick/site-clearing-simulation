@@ -9,12 +9,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 
-public class SiteMapReader implements MapReader<SiteMap> {
+public class SiteMapReader implements MapReader {
     private final BufferedReader reader;
 
-    private SiteMapReader(Builder builder) {
-        assert builder.reader != null;
-        this.reader = new BufferedReader(builder.reader);
+    public SiteMapReader(Reader reader) {
+        this.reader = new BufferedReader(reader);
     }
 
     @Override
@@ -66,19 +65,4 @@ public class SiteMapReader implements MapReader<SiteMap> {
         return new Coordinate(x, y);
     }
 
-    public static class Builder {
-        private Reader reader;
-
-        public Builder() {
-        }
-
-        public Builder reader(Reader reader) {
-            this.reader = reader;
-            return this;
-        }
-
-        public SiteMapReader build() {
-            return new SiteMapReader(this);
-        }
-    }
 }
