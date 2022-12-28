@@ -26,14 +26,14 @@ BUILD SUCCESSFUL in 870ms
 
 ```bash
  ~/l/site-clearing-simulation$ java -jar build/libs/site-clearing-simulation-1.0-SNAPSHOT.jar --file ./site-map-input.txt
-(l)eft, (r)ight, (a)dvance <n>, (q)uit: a 4
-(l)eft, (r)ight, (a)dvance <n>, (q)uit: r
-(l)eft, (r)ight, (a)dvance <n>, (q)uit: a 4
-(l)eft, (r)ight, (a)dvance <n>, (q)uit: l
-(l)eft, (r)ight, (a)dvance <n>, (q)uit: a 2
-(l)eft, (r)ight, (a)dvance <n>, (q)uit: a 4
-(l)eft, (r)ight, (a)dvance <n>, (q)uit: l
-(l)eft, (r)ight, (a)dvance <n>, (q)uit: q
+(l)eft, (r)ight, (a)dvance, (q)uit: a 4
+(l)eft, (r)ight, (a)dvance, (q)uit: r
+(l)eft, (r)ight, (a)dvance, (q)uit: a 4
+(l)eft, (r)ight, (a)dvance, (q)uit: l
+(l)eft, (r)ight, (a)dvance, (q)uit: a 2
+(l)eft, (r)ight, (a)dvance, (q)uit: a 4
+(l)eft, (r)ight, (a)dvance, (q)uit: l
+(l)eft, (r)ight, (a)dvance, (q)uit: q
 advance 4, turn right, advance 4, turn left, advance 2, advance 4, turn left, quit
 Item                                                     Quantity       Cost
 Communication overhead                                       8          8
